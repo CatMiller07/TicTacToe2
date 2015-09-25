@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Tic Tac Toe!</title>
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <style> 
+             table{
+                 width: 60%;
+                 margin: 0 auto;
+             }
+             td{
+                      width: 33%;
+                     border: 2px solid black;
+                 text-align: center;
+                  font-size: 40px;
+                  padding  : 55px;
+                    height: 75px;
+             }
+             button {
+                 width: 20%;
+                 height: 150%;
+                 color: blueviolet;
+                 background-color:beige; 
+               
+             }
+            
+        </style>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>
+            <tr>
+                <td> </td>
+                <td> </td>
+                <td> </td>
+            </tr>    
+        </table>
+        <center>
+            <h1>Current Mode:<span id="mode">2</span> player</h1>
+        </center>    
+        <center>
+            <button onclick="xClick();">Fill grid with X</button)>
+            <button onclick="oClick();">Fill grid with O</button>
+            <button onclick="clearGrid();">Clear Grid</button>
+            <button onclick="changeColor();">Change BG Color</button>
+           
+        </center>
+        <center>
+             <button onclick="toggleMode();">Toggle Mode</button>
+        </center>    
+         <script>
+                var clickCounter = 0;
+                attachEvents();
+             
+             function attachEvents(){
+                  
+                    
+                    $("td").on("click",function(){
+                    if (clickCounter %2 ==0 ) {    
+                       $(this).html("X");
+                    }
+                    else {
+                       $(this).html("O");
+                    }
+                    clickCounter++;   
+                    $(this).unbind("click");  
+                    if ( $("#mode").html() === "1" ) {
+                       var found = false;
+                       $.each( $("td"), function(index,element){
+                       // put an O somewhere 
+                        console.log("Here I am");
+                           if ( $(element).html()==="" && !found) {
+                               $(element).html("O");
+                               found=true;
+                           }
+                       });
+                       clickCounter++;
+                     }
+                    });
+                }
+                
+             function xClick(){
+                  $("td").html("X");      
+                }
+             function oClick(){
+                  $("td").html("O");      
+                }
+             function clearGrid(){
+                  $("td").unbind("click"); 
+                  $("td").html("");
+                  clickCounter = 0;
+                  attachEvents();
+                }
+             function changeColor(){
+                 var colr = Math.round( Math.random()*255);
+                 var color = "rgb("+colr+","+colr+","+colr+")";
+                  $("td").css("background-color",color );   
+                  if (colr < 75) {
+                        $("td").css("color", "white");   
+                  }
+                  else{
+                        $("td").css("color", "Black");  
+                  }
+             }
+             
+             function toggleMode(){
+                clearGrid();
+                var curMode = $("#mode").html();
+                
+                if (curMode === "1") {
+                    $("#mode").html("2");
+                 }
+                else {
+                    $("#mode").html("1");
+                }
+             }
+            </script>
+    </body>
+</html>
